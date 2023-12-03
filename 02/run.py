@@ -17,17 +17,27 @@ def countCubes(line: str) -> int:
     return int(game_id)
 
 
+def powerOfminCubes(line: str) -> int:
+    cubes = {"red": 0, "blue": 0, "green": 0}
+    input_split = line.split(":")
+    for cs in re.findall(pattern_cube, input_split[1]):
+        if int(cs[0]) > cubes[cs[1]]:
+            cubes[cs[1]] = int(cs[0])
+    return cubes["blue"] * cubes["red"] * cubes["green"]
+
+
 def run1(filename: str):
     with open(filename) as file:
         print(sum([countCubes(line.rstrip()) for line in file]))
 
 
 def run2(filename: str):
-    pass
+    with open(filename) as file:
+        print(sum([powerOfminCubes(line.rstrip()) for line in file]))
 
 
 if __name__ == "__main__":
     # filename = "sample.txt"
     filename = "input.txt"
-    run1(filename)
-    # run2(filename)
+    # run1(filename)
+    run2(filename)
