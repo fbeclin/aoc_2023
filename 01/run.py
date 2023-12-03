@@ -18,6 +18,6 @@ def run1(filename: str):
 
 
 if __name__ == "__main__":
-    filename = "sample.txt"
-
+    # filename = "sample.txt"
+    filename = "input01.txt"
     run1(filename)
