@@ -9,9 +9,6 @@ light2temperature_map = []
 temperature2humidity_map = []
 humidity2location_map = []
 
-# part 2
-memo = {}
-
 
 def findNumberInMap(number: int, map: []) -> int:
     for m in map:
@@ -46,13 +43,11 @@ def sortMaps():
 
 def getNewRange(start: int, end: int, map: []) -> []:
     for i, m in enumerate(map):
-        print(f"map: {m}")
         m_max = m[1] + m[2]
         m_diff = m[0] - m[1]
         if start < m_max:
             if start < m[1]:
                 break
-            print(f"{start} < {m_max}")
             # new_start = start + m_diff
             if end < m_max:
                 # found new range
@@ -182,8 +177,8 @@ def run2(filename: str):
 if __name__ == "__main__":
     # get the start datetime
     st = datetime.datetime.now()
-    filename = "sample.txt"
-    # filename = "input.txt"
+    # filename = "sample.txt"
+    filename = "input.txt"
     # run1(filename)
     run2(filename)
 
