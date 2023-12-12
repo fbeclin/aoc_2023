@@ -1,5 +1,23 @@
 import datetime
+from functools import reduce
+from math import ceil, floor, sqrt
+from operator import mul
 import regex as re
+
+
+def getNumberOfWayToWinTheRace(time: int, distance: int):
+    # distance = time * speed
+    # distance < (time - h) * h
+    # we have a quadratic inequality
+    # h² + h*time - distance > 0
+    # discriminent is b² - 4ac which is time² - 4*distance
+    # time² in input is always > 4*distance
+    # which leads to 2 solutions
+    # we need only the inner interval and only integer values
+    a = floor((-time - sqrt(pow(time, 2) - 4 * distance)) / 2)
+    b = ceil((-time + sqrt(pow(time, 2) - 4 * distance)) / 2)
+
+    return b - a - 1
 
 
 def run1(filename: str):
@@ -21,8 +39,15 @@ def run1(filename: str):
                         re.findall("\d+", line[1].rstrip().split(":")[1]),
                     )
                 )
-
-    print(f"times: {times}, distances: {distances}")
+        print(
+            reduce(
+                mul,
+                [
+                    getNumberOfWayToWinTheRace(time, distances[i])
+                    for i, time in enumerate(times)
+                ],
+            )
+        )
 
 
 def run2(filename: str):
