@@ -51,7 +51,15 @@ def run1(filename: str):
 
 
 def run2(filename: str):
-    pass
+    with open(filename) as file:
+        for line in enumerate(file):
+            if line[0] == 0:
+                time = int("".join(re.findall("\d+", line[1].rstrip().split(":")[1])))
+            if line[0] == 1:
+                distance = int(
+                    "".join(re.findall("\d+", line[1].rstrip().split(":")[1]))
+                )
+        print(getNumberOfWayToWinTheRace(time, distance))
 
 
 if __name__ == "__main__":
@@ -59,8 +67,8 @@ if __name__ == "__main__":
     st = datetime.datetime.now()
     # filename = "sample.txt"
     filename = "input.txt"
-    run1(filename)
-    # run2(filename)
+    # run1(filename)
+    run2(filename)
 
     # get the end datetime
     et = datetime.datetime.now()
