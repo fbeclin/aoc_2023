@@ -57,8 +57,8 @@ def run2(filename: str):
 if __name__ == "__main__":
     # get the start datetime
     st = datetime.datetime.now()
-    filename = "sample.txt"
-    # filename = "input.txt"
+    # filename = "sample.txt"
+    filename = "input.txt"
     run1(filename)
     # run2(filename)
 
