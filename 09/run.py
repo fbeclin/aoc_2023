@@ -2,7 +2,7 @@ import datetime
 from itertools import count
 
 
-def getExtrapolatedValues(history: []):
+def fillWithPrediction(history: []):
     predictions = [history]
     # i'm stupid
     while predictions[-1].count(0) != len(predictions[-1]):
@@ -12,6 +12,11 @@ def getExtrapolatedValues(history: []):
             for i in range(0, len(next_prediction) - 1)
         ]
         predictions.append(values)
+    return predictions
+
+
+def getExtrapolatedValues(history: []):
+    predictions = fillWithPrediction(history)
 
     # add last 0 for last prediction
     predictions[-1].append(0)
@@ -21,6 +26,18 @@ def getExtrapolatedValues(history: []):
         predictions[i + 1].append(prediction[-1] + predictions[i + 1][-1])
 
     return predictions[-1][-1]
+
+
+def getExtrapolatedValuesToLeft(history: []):
+    predictions = fillWithPrediction(history)
+
+    # add last 0 for last prediction
+    predictions[-1].insert(0, 0)
+    predictions = list(reversed(predictions))
+    for i, prediction in enumerate(predictions[:-1]):
+        predictions[i + 1].insert(0, -prediction[0] + predictions[i + 1][0])
+
+    return predictions[-1][0]
 
 
 def run1(filename: str):
@@ -38,7 +55,17 @@ def run1(filename: str):
 
 
 def run2(filename: str):
-    pass
+    with open(filename) as file:
+        print(
+            sum(
+                [
+                    getExtrapolatedValuesToLeft(
+                        list(map(lambda x: int(x), line.rstrip().split(" ")))
+                    )
+                    for line in file
+                ]
+            )
+        )
 
 
 if __name__ == "__main__":
@@ -47,8 +74,8 @@ if __name__ == "__main__":
     # filename = "sample.txt"
     # filename = "sample2.txt"
     filename = "input.txt"
-    run1(filename)
-    # run2(filename)
+    # run1(filename)
+    run2(filename)
 
     # get the end datetime
     et = datetime.datetime.now()
